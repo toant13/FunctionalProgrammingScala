@@ -8,7 +8,8 @@ object ExerciseChap2 {
   def main(args: Array[String]) {
 
     println("answer to Exercise 2.1: " + fib(0))
-    println("answer to Exercise 2.2: " + (isSorted(Array(1, 2, 3, 4, 5, 2), sortIntCompare)))
+    println("answer to Exercise 2.2 with function: " + (isSorted(Array(1, 2, 3, 4, 5, 2), sortIntCompare)))
+    println("answer to Exercise 2.2 with inline: " + (isSorted(Array(1, 2, 3, 4, 3), (n1: Int, n2: Int) => n1 <= n2)))
 
 
   }
@@ -44,9 +45,55 @@ object ExerciseChap2 {
     loop(0)
   }
 
+  /**
+    * helper function for isSorted Function
+    *
+    * @param n1
+    * @param n2
+    * @return
+    */
   private def sortIntCompare(n1: Int, n2: Int): Boolean = {
     n1 <= n2
   }
+
+
+  /**
+    * Exercise 2.3
+    * @param f
+    * @tparam A
+    * @tparam B
+    * @tparam C
+    * @return
+    */
+  def curry[A, B, C](f: (A, B) => C): A => (B => C) = {
+    a => b => f(a: A, b: B)
+  }
+
+  /**
+    * Exercise 2.4
+    * @param f
+    * @tparam A
+    * @tparam B
+    * @tparam C
+    * @return
+    */
+  def uncurry[A, B, C](f: A => B => C): (A, B) => C = {
+    (a: A, b: B) => f(a)(b)
+  }
+
+  /**
+    * Exercise 2.5
+    * @param f
+    * @param g
+    * @tparam A
+    * @tparam B
+    * @tparam C
+    * @return
+    */
+  def compose[A, B, C](f: B => C, g: A => B): A => C = {
+    a => f(g(a))
+  }
+
 
 
 }
