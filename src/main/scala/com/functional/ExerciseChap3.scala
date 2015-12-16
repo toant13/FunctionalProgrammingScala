@@ -248,4 +248,41 @@ object ExerciseChap3 {
     }
   }
 
+
+  /**
+    * Exercise 3.27
+    * @param as
+    * @tparam A
+    * @return
+    */
+  def depth[A](as: Tree[A]): Int = {
+    as match {
+      case Leaf(_) => 0
+      case Branch(l, r) => 1 + (depth(l).max(depth(r)))
+    }
+  }
+
+
+  def fold[A, B](as: Tree[A])(f: A => B)(g: (B, B) => B): B = {
+    as match {
+      case Leaf(x) => f(x)
+      case Branch(l, r) => g(fold(l)(f)(g), fold(l)(f)(g))
+    }
+  }
+
+  //  /**
+  //    * Exercise 3.29
+  //    * @param as
+  //    * @param f
+  //    * @tparam A
+  //    * @return
+  //    */
+  //  def map[A](as: Tree[A])(f:(A) => A): Tree[A] = {
+  //    as match {
+  //      case Leaf(y) => Leaf(y)
+  //      case Branch(l,r) => map(l)(f)
+  //    }
+  //  }
+
+
 }
