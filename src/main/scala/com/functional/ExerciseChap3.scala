@@ -7,11 +7,18 @@ case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
 
+
+
 /**
   * Created by toantran on 12/13/15.
   */
 object ExerciseChap3 {
 
+
+  def main(args: Array[String]) {
+    val xs = List(1,2,3,4,5)
+    length(xs)
+  }
 
   //exercise 3.1
   //
@@ -61,8 +68,73 @@ object ExerciseChap3 {
     * @tparam A
     * @return
     */
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] ={
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = {
+    l match {
+      case Cons(x, xs) if f(x) => dropWhile(xs, f)
+      case _ => l
+    }
 
   }
+
+  /**
+    * excercise 3.6
+    * @param l
+    * @tparam A
+    * @return
+    */
+  def init[A](l: List[A]): List[A] = {
+    l match {
+      case Cons(x, xs) if (xs != Nil) => Cons(x, init(xs))
+      case Nil => l
+    }
+  }
+
+  def product(ds: List[Double]): Double = ds match {
+    case Nil => 1.0
+    case Cons(0.0, _) => 0.0
+    case Cons(x, xs) => x * product(xs)
+  }
+
+
+
+
+  /**
+    * excercise 3.9
+    * @param as
+    * @tparam A
+    * @return
+    */
+  def length[A](as: List[A]): Int = {
+
+    foldRight(as, 0)((_, xs) => xs + 1)
+
+  }
+
+  /**
+    * excercise 3.10
+    * @param as
+    * @param z
+    * @param f
+    * @tparam A
+    * @tparam B
+    * @return
+    */
+  @annotation.tailrec
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B ={
+    as match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z,x))(f)
+    }
+  }
+
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
+    as match {
+      case Nil => z
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+  }
+
+  def sum[A][B](a:A,)
+
 
 }
