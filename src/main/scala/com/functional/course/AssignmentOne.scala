@@ -13,12 +13,12 @@ object AssignmentOne {
 
 
 
-    val list = "((())just an) example".toList
+    val list = "())(".toList
     println(balance(list))
 
 
-    val coins = List(2,3)
-    println("number of coins: " + countChange(1,coins))
+    val coins = List(2, 3)
+    println("number of coins: " + countChange(1, coins))
   }
 
   /**
@@ -42,7 +42,7 @@ object AssignmentOne {
     */
   def balance(chars: List[Char]): Boolean = {
     def helper(chars: List[Char], open: Int): Boolean = {
-      if (chars.isEmpty) open == 0
+      if (chars.isEmpty || open < 0) open == 0
       else if (chars.head == '(') helper(chars.tail, open + 1)
       else if (chars.head == ')') helper(chars.tail, open - 1)
       else helper(chars.tail, open)
@@ -58,10 +58,9 @@ object AssignmentOne {
     * @return
     */
   def countChange(money: Int, coins: List[Int]): Int = {
-    if(coins.isEmpty || money <= 0) 0
-    else if (money - coins.head == 0) 1
-    else countChange(money - coins.head,coins) + countChange(money,coins.tail)
-
+    if (coins.isEmpty || money < 0) 0
+    else if (money == 0) 1
+    else countChange(money - coins.head, coins) + countChange(money, coins.tail)
   }
 
 
