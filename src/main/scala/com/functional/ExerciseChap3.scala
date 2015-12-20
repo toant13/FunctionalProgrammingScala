@@ -30,6 +30,10 @@ object ExerciseChap3 {
     println(length(ex1))
     //    val ret = appendWithLeft(ex1, ex2)
     //    println(ret)
+
+
+    val t = tail(ex1)
+    println(t)
     println("Done")
 
   }
@@ -163,6 +167,38 @@ object ExerciseChap3 {
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
   }
+
+  /**
+    * Exercise 3.18
+    * @param as
+    * @param f
+    * @tparam A
+    * @tparam B
+    * @return
+    */
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, Nil:List[B])((x,y) => Cons(f(x),y))
+  }
+
+
+
+
+
+  /**
+    * Exercise 3.19
+    * @param as
+    * @param f
+    * @tparam A
+    * @return
+    */
+  def filter[A](as: List[A])(f: A => Boolean): List[A] ={
+    foldRight(as, Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t)
+  }
+
+
+
+
+
 
   /**
     * exercise 3.13
