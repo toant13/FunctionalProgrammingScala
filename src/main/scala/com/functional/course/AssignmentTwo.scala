@@ -8,8 +8,9 @@ object AssignmentTwo {
 
   def main(args: Array[String]) {
     val t = singletonSet(3)
-    t(3)
+    val un = union(singletonSet(3), singletonSet(10))
 
+    println(contains(un, 10))
 
     println("done")
   }
@@ -64,10 +65,39 @@ object AssignmentTwo {
   def forall(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
       if (a > bound) true
-      else if (contains(s,a)) contains(p,a)
-      else iter(a+1)
+      else if (contains(s, a)) contains(p, a)
+      else iter(a + 1)
     }
     iter(-bound)
   }
 
+
+  /**
+    * Returns whether there exists a bounded integer within `s`
+    * that satisfies `p`.
+    */
+  def exists(s: Set, p: Int => Boolean): Boolean = {
+    forall(intersect(s, p), intersect(s, p))
+  }
+
+  /**
+    * Returns a set transformed by applying `f` to each element of `s`.
+    */
+  def map(s: Set, f: Int => Int): Set = x => s(f(x))
+
+
+  /**
+    * Displays the contents of a set
+    */
+  def toString(s: Set): String = {
+    val xs = for (i <- -bound to bound if contains(s, i)) yield i
+    xs.mkString("{", ",", "}")
+  }
+
+  /**
+    * Prints the contents of a set on the console.
+    */
+  def printSet(s: Set) {
+    println(toString(s))
+  }
 }
