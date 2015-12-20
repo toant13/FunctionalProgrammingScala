@@ -13,9 +13,12 @@ object AssignmentOne {
 
 
 
-    val list = "()just an) example".toList
+    val list = "((())just an) example".toList
     println(balance(list))
 
+
+    val coins = List(1,2,3)
+    println("number of coins: " + countChange(4,coins))
   }
 
   /**
@@ -45,6 +48,20 @@ object AssignmentOne {
       else helper(chars.tail, open)
     }
     helper(chars, 0)
+  }
+
+  /**
+    * Exercise 3: Counting Change
+    *
+    * @param money
+    * @param coins
+    * @return
+    */
+  def countChange(money: Int, coins: List[Int]): Int = {
+    if(coins.isEmpty || money <= 0) 0
+    else if (money - coins.head == 0) 1
+    else countChange(money - coins.head,coins) + countChange(money,coins.tail)
+
   }
 
 
