@@ -17,8 +17,8 @@ object AssignmentOne {
     println(balance(list))
 
 
-    val coins = List(1,2,3)
-    println("number of coins: " + countChange(4,coins))
+    val coins = List(2,3)
+    println("number of coins: " + countChange(1,coins))
   }
 
   /**

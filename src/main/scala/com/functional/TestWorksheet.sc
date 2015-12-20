@@ -19,3 +19,7 @@ catch { case e: Exception => 43 } }
 
 
 failingFn2(12)
+
+
+val x = false && false
+println("does it work " + x)
