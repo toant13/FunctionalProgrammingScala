@@ -1,11 +1,10 @@
-package com.functional
+package com.functional.course
 
 import org.scalatest.FunSuite
 
+
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-
-
 /**
   * Created by toantran on 12/20/15.
   */
