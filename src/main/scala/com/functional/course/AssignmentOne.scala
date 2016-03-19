@@ -9,7 +9,7 @@ object AssignmentOne {
   def main(args: Array[String]) {
     println("Assignment 1")
 
-    println(pascal(0, 0))
+    println(pascal(1, 3))
 
 
 

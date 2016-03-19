@@ -7,11 +7,26 @@ object ExerciseChap2 {
 
   def main(args: Array[String]) {
 
-    println("answer to Exercise 2.1: " + fib(0))
-    println("answer to Exercise 2.2 with function: " + (isSorted(Array(1, 2, 3, 4, 5, 2), sortIntCompare)))
+
+    println("answer to Exercise 2.1: " + topdownFib(9))
+//    println("answer to Exercise 2.1: " + fib(0))
+//    println("answer to Exercise 2.2 with function: " + (isSorted(Array(1, 2, 3, 4, 5, 2), sortIntCompare)))
     println("answer to Exercise 2.2 with inline: " + (isSorted(Array(1, 2, 3, 4, 3), (n1: Int, n2: Int) => n1 <= n2)))
 
 
+  }
+
+
+  /**
+    * Exercise 2.1
+    * using top down approach
+    * @param n
+    * @return
+    */
+  def topdownFib(n: Int): Int = {
+    if(n == 1) 0
+    else if( n == 2) 1
+    else topdownFib(n-1) + topdownFib(n-2)
   }
 
   /**

@@ -22,21 +22,35 @@ object ExerciseChap3 {
   def main(args: Array[String]) {
 
 
-    val ex1: List[Int] = Cons(1, Cons(2, Nil))
-    val ex2: List[Int] = Cons(3, Cons(4, Nil))
+    val ex1: List[Int] = Cons(1, Cons(2, Cons(3, Cons(4, Cons(5, Nil)))))
+    val ex2 = Cons(1, Nil)
+
+    println(ex1)
 
 
-
-    println(length(ex1))
+//    println(length(ex1))
     //    val ret = appendWithLeft(ex1, ex2)
     //    println(ret)
 
 
-    val t = tail(ex1)
-    println(t)
+//    val t = tail(ex1)
+//    println(init(ex1))
+
+
+//    println(sumLeft(ex2))
+
+    println(reverseLeftFold(ex2))
     println("Done")
 
+
   }
+
+  def sum(ints: List[Int]): Int = ints match {
+    // A function that uses pattern matching to add up a list of integers
+    case Nil => 0 // The sum of the empty list is 0.
+    case Cons(x, xs) => x + sum(xs) // The sum of a list starting with `x` is `x` plus the sum of the rest of the list.
+  }
+
 
   //exercise 3.1
   //
@@ -65,7 +79,7 @@ object ExerciseChap3 {
   }
 
   /**
-    * excercise 3.4
+    * exercise 3.4
     * @param l
     * @param n
     * @tparam A
@@ -80,7 +94,7 @@ object ExerciseChap3 {
   }
 
   /**
-    * excercise 3.5
+    * exercise 3.5
     * @param l
     * @param f
     * @tparam A
@@ -95,15 +109,17 @@ object ExerciseChap3 {
   }
 
   /**
-    * excercise 3.6
+    * exercise 3.6
     * @param l
     * @tparam A
     * @return
     */
   def init[A](l: List[A]): List[A] = {
     l match {
-      case Cons(x, xs) if (xs != Nil) => Cons(x, init(xs))
       case Nil => l
+      case Cons(_,Nil) =>  Nil
+      case Cons(x, xs) => Cons(x,init(xs))
+
     }
   }
 
@@ -115,20 +131,44 @@ object ExerciseChap3 {
 
 
   /**
-    * excercise 3.9
+    * exercise 3.9
     * @param as
     * @tparam A
     * @return
     */
   def length[A](as: List[A]): Int = {
-
     foldRight(as, 0)((_, xs) => xs + 1)
-
   }
 
+  /**
+    * exercise 3.10
+    * @param as
+    * @param z
+    * @param f
+    * @tparam A
+    * @tparam B
+    * @return
+    */
+  @annotation.tailrec
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
+    as match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
+    }
+  }
 
   /**
-    * excercise 3.11
+    * exercise 3.12
+    * @param l
+    * @tparam A
+    * @return
+    */
+  def reverseLeftFold[A](l: List[A]): List[A] = {
+    foldLeft(l, List[A]())((b, a) => Cons(a, b))
+  }
+
+  /**
+    * exercise 3.11
     * @param ns
     * @return
     */
@@ -141,7 +181,7 @@ object ExerciseChap3 {
   }
 
   /**
-    * excercise 3.11
+    * exercise 3.11
     * @param ns
     * @return
     */
@@ -150,15 +190,7 @@ object ExerciseChap3 {
   }
 
 
-  //  /**
-  //    * excercise 3.12
-  //    * @param l
-  //    * @tparam A
-  //    * @return
-  //    */
-  //  def reverseLeftFold[A](l: List[A]): List[A] = {
-  //    foldLeft(l, List[A]())((acc, h) => Cons(h, acc))
-  //  }
+
 
 
   def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
@@ -169,6 +201,18 @@ object ExerciseChap3 {
   }
 
   /**
+    * exercise 3.18
+    *
+    * @param as
+    * @return
+    */
+  def listToString(as: List[Double]): List[String] = {
+    foldRight(as, Nil:List[String])((x, xs) => Cons(x.toString,xs))
+  }
+
+
+
+  /**
     * Exercise 3.18
     * @param as
     * @param f
@@ -177,11 +221,8 @@ object ExerciseChap3 {
     * @return
     */
   def map[A, B](as: List[A])(f: A => B): List[B] = {
-    foldRight(as, Nil:List[B])((x,y) => Cons(f(x),y))
+    foldRight(as, Nil: List[B])((x, y) => Cons(f(x), y))
   }
-
-
-
 
 
   /**
@@ -191,13 +232,9 @@ object ExerciseChap3 {
     * @tparam A
     * @return
     */
-  def filter[A](as: List[A])(f: A => Boolean): List[A] ={
-    foldRight(as, Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t)
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
   }
-
-
-
-
 
 
   /**
@@ -228,22 +265,7 @@ object ExerciseChap3 {
   }
 
 
-  /**
-    * excercise 3.10
-    * @param as
-    * @param z
-    * @param f
-    * @tparam A
-    * @tparam B
-    * @return
-    */
-  @annotation.tailrec
-  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
-    as match {
-      case Nil => z
-      case Cons(x, xs) => foldLeft(xs, f(z, x))(f)
-    }
-  }
+
 
   //  /**
   //    * Exercise 3.14
