@@ -1,40 +1,8 @@
 package com.functional
 
 
-/** ***********Exercise  4.1 ****************************/
-trait Option[+A] {
-  def map[B](f: A => B): Option[B] = {
-    this match {
-      case None => None
-      case Some(x) => Some(f(x))
-    }
-
-  }
-
-  def flatMap[B](f: A => Option[B]): Option[B] = {
-    map(f) getOrElse None
-  }
-
-  def getOrElse[B >: A](default: => B): B = {
-    this match {
-      case None => default
-      case Some(x) => x
-    }
-  }
-
-  def orElse[B >: A](ob: => Option[B]): Option[B] = {
-    this map (Some(_)) getOrElse ob
-  }
-
-  def filter(f: A => Boolean): Option[A] = {
-    flatMap(a => if (f(a)) Some(a) else None)
-  }
-}
-
-/** *****************************************************/
-
+//sealed trait Option[+A]
 case class Some[+A](get: A) extends Option[A]
-
 case object None extends Option[Nothing]
 
 
@@ -60,3 +28,43 @@ object ExerciseChap4 {
 
 
 }
+
+/** ***********Exercise  4.1 ****************************/
+trait Option[+A] {
+  def map[B](f: A => B): Option[B] = {
+    this match {
+      case None => None
+      case Some(x) => Some(f(x))
+    }
+
+  }
+
+  def flatMap[B](f: A => Option[B]): Option[B] = {
+    map(f) getOrElse None
+//    map(f).getOrElse(None) //equivalent as above
+  }
+
+  def getOrElse[B >: A](default: => B): B = {
+    this match {
+      case None => default
+      case Some(x) => x
+    }
+  }
+
+  def orElse[B >: A](ob: => Option[B]): Option[B] = {
+    this map(Some(_)) getOrElse ob
+  }
+
+  def filter(f: A => Boolean): Option[A] = {
+    flatMap(a => if (f(a)) Some(a) else None)
+  }
+}
+
+
+
+/** *****************************************************/
+
+
+
+
+
